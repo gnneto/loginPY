@@ -1,13 +1,10 @@
 import sqlite3
 import bcrypt
 
-conexao = sqlite3.connect('interface/gerenciadorBanco.db')
-cursor = conexao.cursor()
-
 # Cria o banco de dados e suas tabelas/colunas iniciais.
 def criarBanco():  # save_user
 
-    conexao = sqlite3.connect('interface/gerenciadorBanco.db')
+    conexao = sqlite3.connect('gerenciadorBanco.db')
     cursor = conexao.cursor()
 
     cursor.execute("""
@@ -27,7 +24,7 @@ def criarBanco():  # save_user
 # Cadastro de dados do usuario Email/senha
 def cadastrarUsuarios(email, senha):
     criarBanco()
-    conexao = sqlite3.connect('interface/gerenciadorBanco.db')
+    conexao = sqlite3.connect('gerenciadorBanco.db')
     cursor = conexao.cursor()
     
     senhaHash = bcrypt.hashpw(senha.encode('utf-8'), bcrypt.gensalt())
@@ -40,7 +37,8 @@ def cadastrarUsuarios(email, senha):
 
 
 def validarLogin(email, senha):
-    conexao = sqlite3.connect('interface/gerenciadorBanco.db')
+    criarBanco()
+    conexao = sqlite3.connect('gerenciadorBanco.db')
     cursor = conexao.cursor()
 
     cursor.execute('SELECT senha FROM usuarios WHERE email = ?', (email,))
@@ -59,7 +57,8 @@ def validarLogin(email, senha):
     conexao.close()
 
 def validacaoSenhaUsuario(email):
-    conexao = sqlite3.connect('interface/gerenciadorBanco.db')
+    criarBanco()
+    conexao = sqlite3.connect('gerenciadorBanco.db')
     cursor = conexao.cursor()
 
     cursor.execute("SELECT senha FROM usuarios WHERE email = ?", (email,))
@@ -75,9 +74,3 @@ def validacaoSenhaUsuario(email):
     
     cursor.close()
     conexao.close()
-# Salva no banco as senhas gereciadas que o usuario adicionou e suas respequitivas frases segura 
-def gerenciadorSenhas():
-    pass
-
-
-
