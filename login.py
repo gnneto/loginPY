@@ -119,7 +119,6 @@ class Aplicacao():
 
                 # Verifica se a senha é igual a de confirmacao.
                 if senha == confeSenha:
-                    print(f'As senha sao iguais -> {senha} e {confeSenha}')
                     messagebox.showinfo(title=None, message="Cadastro concluido.")
                     banco.cadastrarUsuarios(email,senha)
                 else:
